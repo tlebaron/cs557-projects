@@ -1,4 +1,4 @@
-
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -15,6 +15,9 @@ void peanut(){
 int main(int argc, char **argv) {
 	//void *p = NULL;
         //printf("%p", (void*)&p);
+
+	//size_t size = sysconf(_SC_PAGESIZE);
+	//printf("%d", size);
 
 	peanut();
 
