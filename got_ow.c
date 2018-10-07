@@ -19,6 +19,11 @@ int main(int argc, char **argv) {
 	//size_t size = sysconf(_SC_PAGESIZE);
 	//printf("%d", size);
 
+	char *name[2];
+        name[0] = "/bin/shh";
+        name[1] = NULL;
+
+
 	peanut();
 
 }
