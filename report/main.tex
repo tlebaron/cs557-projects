@@ -47,25 +47,50 @@
 \title{PeanutPower: CS557 Project 2
 }
 
-
 \author{\IEEEauthorblockN{Thomas Le Baron}
-\IEEEauthorblockA{\textit{Computer Science} \\
+\IEEEauthorblockA{Team 1008 \\ \textit{Computer Science} \\
 \textit{Worcester Polytechnic Institute}\\
 Worcester MA, USA \\
 tlebaron@wpi.edu}
 \and
 \IEEEauthorblockN{Brittany Lewis}
-\IEEEauthorblockA{\textit{Computer Science} \\
+\IEEEauthorblockA{Team 1008 \\ \textit{Computer Science} \\
 \textit{Worcester Polytechnic Institute}\\
 Worcester MA, USA \\
 bfgradel@wpi.edu}
 }
+
+
 
 \maketitle
 
 \begin{abstract}
 In this work we introduce a vulnerable binary "PeanutPower" which has a format string vulnerability. We also prove that this binary can be explioted to launch bin shh through execve. We do this through overwriting the global offset table using a format string vulnerabilitiy. We are then able to use return-oriented programming to utilize a series of gadgets that allow us to launch a shell.
 \end{abstract}
+
+\section{Finding PeanutPower}
+Our docker image for PeanutPower is located at:
+
+https://hub.docker.com/r/0495/cs557-peanutpower/
+
+The challenge binary is:
+
+ home/user/penutpower
+
+The solution is at:
+
+/root/solutions/penutpower/
+
+Hashes obtained using linux md5sum:
+
+The hash for the binary is:
+
+db9526e5b578370f2ba74cee1b4760fc
+
+The hash for the source file is:
+
+ c9aebb24c506994dd6faeaf3d4b13622
+
 
 \input{introduction}
 \input{design}
