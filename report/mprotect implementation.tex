@@ -1,0 +1,32 @@
+\section{Use Mprotect}\label{sec:mprotectimplementation}
+Our solution rely on the fact that the string "/bin/shh" exists in the memory to work. There is a solution to execute execve() without it. Instead of writing a ROP chain to execute execve() directly, we use it to call the mprotect() function to grant to the stack the capacity to be executable. After that, we can execute a shellcode which call execve("/bin/shh") as wanted.
+The buffer needs to be modified slightly:
+{\tt \small
+\begin{verbatim}
++---------+  ^
+| %x & %n |  |  stack
+| three   |  |  grows
+| times   |  |  this way
++---------+  +
+|   ROP   |
+|  chain  |
++---------+
+|shellcode|
++---------+
+| padding |
+| optional|
++---------+
+|  exit   |
+|addresses|
++---------+
+\end{verbatim}
+}
+
+\subsection{ROP chain}
+The content of the buffer is also modified slightly.
+The ROP chain aims now to call protect. It presents an unexpected surprise: the call number we need to pass to system is {\tt 0x0a}, which is the hexadecimal representation of a newline, which would terminate the execution of fgets(). To bypass this, we use a gadget which {\tt pop rax} the value {\tt 0x8} followed by another one which add {\tt 0x2} to rax.
+
+\subsection{shellcode}
+The shellcode could have been used for the protect 1. It does the exact same work as the ROP chain in the previous implementation, but doesn't use the address of the /bin/shh string but this string directly.
+
+This solution worked fine on gbd but we did not manage to execute it outside of gdb. We first found that the base address of the stack was different but it was not sufficient to make it work as expected.

