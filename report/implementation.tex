@@ -1,4 +1,5 @@
-\section{Implementation}\label{sec:implementation}
+\section{Implementation}
+\label{sec:implementation}
 The buffer we used to execute {\tt execve("/bin/shh")} has the following contruction:
 
 {\tt \small
@@ -71,10 +72,11 @@ We used the struct package and its pack() function in our exploit to implement t
 Padding to cover the whole buffer is optional but useful when creating the exploit. If we need to add something before the exit addresses, their position will change and we will need to start again, determining their position to point at it again. With a padding, the position of the exit addresses will stay the same whatever we append to the exploit buffer before padding. We implemented the padding as follow:
 \begin{verbatim}
 def pad(s):
-	return s+X*(buffer_size - len(s) - exit_addresses_size)
+	return s+X*(buffer_size - len(s)
+             - exit_addresses_size)
 exploit = pad(exploit)
 \end{verbatim}
-}
+
 
 \subsection{Exit addresses}
 The exit address in the GOT can be determined simply by disassembling peanut(). We see that the function called is {\tt <exit@plt>}, which jumps directly to another address, which is the place in the GOT which store the real address of exit(). In our case, this address is {\tt 0x601030}.
