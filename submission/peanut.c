@@ -13,15 +13,9 @@ void peanut(){
 }
 
 int main(int argc, char **argv) {
-	//void *p = NULL;
-        //printf("%p", (void*)&p);
-
-	//size_t size = sysconf(_SC_PAGESIZE);
-	//printf("%d", size);
-
+	
 	char *name[2];
-	//name[0] = "/bin/shh";
-        fgets(name[0], 8, stdin);
+	name[0] = "/bin/shh";
         name[1] = NULL;
 
 
