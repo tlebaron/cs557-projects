@@ -29,4 +29,4 @@ The ROP chain aims now to call protect. It presents an unexpected surprise: the 
 \subsection{shellcode}
 The shellcode could have been used for the protect 1. It does the exact same work as the ROP chain in the previous implementation, but doesn't use the address of the /bin/shh string but this string directly.
 
-This solution worked fine on gbd but we did not manage to execute it outside of gdb. We first found that the base address of the stack was different but it was not sufficient to make it work as expected.
+This solution worked fine on gbd but we did not manage to execute it outside of it. The first mistake was that even without ASLR, the base address of the stack has changed, as long as the size of the page. Nevertheless, even after this correction, which make strace print that mprotect return 0 (thus we know that our ROP chain to call it is working), we still found an illegal instruction. Our bet is that the shellcode can not be executed yet.
