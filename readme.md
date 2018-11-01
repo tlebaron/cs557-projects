@@ -50,3 +50,6 @@ int main(){
 	return 0;
 }
 - we directly execute execve("/bin/shh") if they find the right key. It is like a "protected" admin page. We can pump it a bit by asking for a password to access the admin privileges.
+
+
+- otherwise the "mistake" one is fun: in if (fd = open(,,) > 0), ">" is computed before "=", thus fd is always equal to 1, the stdin. Seems a bit too simple once you get that there is a issue since the program asks for two inputs instead of 1 for the scanf
