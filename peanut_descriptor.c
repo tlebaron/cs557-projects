@@ -5,8 +5,9 @@ char buf[32];
 
 void wowyoutoo() {
 	printf("Tell us how much you love peanut!");
-	char buffer[64];
-	gets(buffer);
+
+
+
 }
 
 int main(int argc, char* argv[], char* envp[]){
