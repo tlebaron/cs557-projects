@@ -20,13 +20,15 @@ int main(int argc, char** argv){
 
         	if( (key ^ random) == 0x9000dd09 ){
 
+			//printf("Alfred> I am glad to see you safe master Peanut.\n");
+
 			int fd = atoi( argv[1] ) - 0x1234;
         		int len = 0;
         		len = read(fd, buf, 32);
 
         		if(strcmp("ILOVEPEANUT\n", buf) == 0){
 
-	 			printf("Alfred> I am glad to see you safe master Peanut.\n");
+				//printf("Alfred> Be careful, with great power comes great responsibility.\n");
 			
 				char buffer[32];
 			        char buffer2[32];
@@ -40,13 +42,18 @@ int main(int argc, char** argv){
 
         			execve(buffer2, p_buffer2, NULL);
 
+				printf("Content of buffer is  %x", *buffer);
+
 				return 0;
         		}
+
+			printf("Alfred> I guess you can rest for a bit.\n");
 
                 	return 0;
         	}
 
         	printf("Le Door> Mouhahaha do you think you can fool Le Great Door of le Peanutcave? Your failure changed the password, you will never find it!\n");
+		return 0;
 	}
 }
 
