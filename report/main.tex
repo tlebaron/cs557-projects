@@ -1,0 +1,104 @@
+
+\documentclass[10pt, conference, letterpaper]{IEEEtran}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\usepackage{todonotes,graphicx,tabu,tabularx}
+\usepackage{xspace}
+\usepackage{bm}
+\usepackage{color}
+\usepackage{breakurl}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}
+
+\usepackage{amsmath}
+
+
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+%%% Functions %%%
+\graphicspath{ {images/} }
+\newcommand{\sysname}{ModiPick\xspace}
+\newcommand{\Brittany}[1]{{\color{red}\textbf{Brittany: \textit{#1}}}}
+\newcommand{\sam}[1]{{\color{blue}\textbf{Sam: \textit{#1}}}}
+\newcommand{\eat}[1]{}
+%%%%%%%%%%%%
+
+
+
+\title{access\_to\_the\_peanut\_cave: CS557 Project 3
+}
+
+\author{\IEEEauthorblockN{Thomas Le Baron}
+\IEEEauthorblockA{Team 1008 \\ \textit{Computer Science} \\
+\textit{Worcester Polytechnic Institute}\\
+Worcester MA, USA \\
+tlebaron@wpi.edu}
+\and
+\IEEEauthorblockN{Brittany Lewis}
+\IEEEauthorblockA{Team 1008 \\ \textit{Computer Science} \\
+\textit{Worcester Polytechnic Institute}\\
+Worcester MA, USA \\
+bfgradel@wpi.edu}
+}
+
+
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\section{Finding access\_to\_the\_peanut\_cave}
+Our docker image for access\_to\_the\_peanut\_cave is located at:
+
+
+
+The challenge binary is:
+
+
+
+The solution is at:
+
+
+
+Hashes obtained using linux md5sum:
+
+The hash for the binary is:
+
+The hash for the source file is:
+
+
+
+\input{introduction}
+\input{design}
+\input{implementation}
+\input{exploitation}
+\input{conclusion}
+
+
+
+%\bibliographystyle{ieeetran}
+%\bibliography{bib}
+
+
+\end{document}

