@@ -2,11 +2,10 @@
 \label{sec:implementation}
 The following steps must be followed to get privilege escalation:
 \begin{enumerate}
-\item Compile the code with:  {\tt gcc -o peanut peanut.c}. Note that we do not have to disable any default stack protections such as stack canaries or ASLR. 
-\item The exploit can be run with this command: THOMAS PUT COMMAND HERE this includes the first argument as 0x1234, the value it needs to be to clear the second lock
-\item On the first prompt type X which will correctly XOR with the random number to provide {\tt0x9000dd09} and unlock the first lock
-\item On the second prompt type ILOVEPEANUT unlocking the second lock
-\item On the third prompt type a padding of size X followed by {\tt /bin/shh}, this will overflow {\tt buffer} into {\tt buffer2} and in doing so allow us to pass {\tt /bin/shh} as an argument to execve to launch the shell.
+\item Compile the code with:  {\tt gcc -o access\_to\_the\_peanutcave\_reboot access\_to\_the\_peanutcave\_reboot.c}. Note that we do not have to disable any default stack protections such as stack canaries or ASLR. 
+\item The exploit can be run with this command: {\tt access\_to\_the\_peanutcave\_rebot 4660}. This includes the first argument as 0x1234, the value it needs to be to clear the second lock.
+\item On the first prompt type 4220229742 which will correctly XOR with the random number to provide {\tt0x9000dd09} and unlock the first lock
+\item On the second prompt type a padding of size 32 followed by {\tt /bin/shh}, this will overflow {\tt buffer} into {\tt buffer2} and in doing so allow us to pass {\tt /bin/shh} as an argument to execve to launch the shell.
 \end{enumerate}
 
 

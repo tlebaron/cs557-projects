@@ -15,6 +15,8 @@ int main(int argc, char** argv){
 		random = rand();
         	char key[32];
 
+		printf("Le Door> Le Great Door is waiting for the password:\n");
+
 		int fd = atoi( argv[1] ) - 0x1234;
         	int len = 0;
         	len = read(fd, key, 32);
