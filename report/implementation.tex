@@ -1,17 +1,13 @@
 \section{Implementation}
 \label{sec:implementation}
-Our exploit involves a set of 2 different inputs in order to break each successive lock. The combination of these inputs allows us to break through the two layers of locks in order to launch a shell with privilege escalation. 
+The following steps must be followed to get the privilege escalation:
+\begin{enumerate}
+\item Compile the code with: {\tt gcc -o access\_to\_the\_peanutcave\_reboot access\_to\_the\_peanutcave\_reboot.c.} 
 
-\subsection{Before program execution}
-Before the start of program execution there are several steps that need to be taken. First, we must find what the value of random is going to be. The easiest way of doing this is to create a program which simply creates a random number using rand and prints it out. In our case, we used a file called test.c to do this, the code for doing so is in lines 8-10 in our test.c file. Once we get that value (1804289383) we can perform and {\tt XOR} with {\tt 0x9000dd0g} from line 26 in our challenge binary (the first lock we need to break) in order to get a value we will need later in execution. That number turns out to be 4220229742.
+Note that we do not have to disable any default stack protections such as stack canaries or ASLR.
+\item The exploit can be run with this command: access\_to\_the\_peanutcave\_reboot 4660.
 
-We will also need to use GDB to disassemble the code in order to grab the locations of \emph{buffer} and \emph{buffer2} so that we can know how much padding we need in order to overflow the correct value into \emph{buffer2} if we don't want to run the program multiple times. Alternatively, we found our padding simply by running the program once with strace and seeing what was passed to \emph{execve()}. 
-
-In addition, when we are calling the program we will need to give it an argument equal to \emph{0x1234} (from line 20 of our challenge program) so that eventually when the program grabs a file descriptor, we will have an fd of 0 allowing us to read from stdin and break the second lock.
-
-\subsection{During program execution}
-When the program is running, the \emph{argv[1]} needs to be equal to 4660 in order to the file descriptor used in the \emph{read()}. Without it, the program will simply stop since there will be no other valid file descriptor number. Otherwise, it continues smoothly.
-
-When the program is running, there will be two prompts. On the first prompt, we have to input the value we got from XORing rand earlier, 4220229742. This will result in the comparison being true, and will open the lock.
-
-After passing the lock, our program is designed to execute the command specified by the first argument, which must be 4660 in order to be able to reach this state. We will need to make sure that \emph{buffer2} is set to be ''/bin/shh'' instead. In order to do that, we have to do a buffer overflow. We could do that by coming through the disassembly before we begin (as previously stated), however in our case we just supplied an input of ''AAAABBBBCCCC...'' and then using strace to see what was passed to execve. Using this method we found that we needed a buffer of size 32 before inputting ''/bin/shh'' (we could also have use gdb to verify how far \emph{buffer} is from \emph{buffer2} on the stack. We then redid our execution and put in out correct buffer and ''/bin/shh'' on the second prompt. This successfully launches a shell.
+This includes the first argument as 0x1234, the value it needs to be to clear the second lock.
+\item On the first prompt type 4220229742 which will correctly XOR with the random number to provide 0x9000dd09 and unlock the first lock
+\item On the second prompt type a padding of size 32 followed by /bin/shh, this will overflow buffer into buffer2 and in doing so allow us to pass /bin/shh as an argument to execve to launch the shell.
+\end{enumerate}

@@ -1,6 +1,6 @@
-\section{Exploitation}
-\label{sec:exploitation}
-Our exploit involves a set of 3 different inputs in order to break each successive lock. The combination of these inputs allows us to break through the three layers of locks in order to launch a shell with privilege escalation. 
+\section{Implementation}
+\label{sec:implementation}
+Our exploit involves a set of 2 different inputs in order to break each successive lock. The combination of these inputs allows us to break through the two layers of locks in order to launch a shell with privilege escalation. 
 
 \subsection{Before program execution}
 Before the start of program execution there are several steps that need to be taken. First, we must find what the value of random is going to be. The easiest way of doing this is to create a program which simply creates a random number using rand and prints it out. In our case, we used a file called test.c to do this, the code for doing so is in lines 8-10 in our test.c file. Once we get that value (1804289383) we can perform and {\tt XOR} with {\tt 0x9000dd0g} from line 26 in our challenge binary (the first lock we need to break) in order to get a value we will need later in execution. That number turns out to be 4220229742.
