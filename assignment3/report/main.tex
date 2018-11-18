@@ -1,0 +1,97 @@
+
+\documentclass[10pt, conference, letterpaper]{IEEEtran}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\usepackage{todonotes,graphicx,tabu,tabularx}
+\usepackage{xspace}
+\usepackage{bm}
+\usepackage{color}
+\usepackage{breakurl}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}
+
+\usepackage{amsmath}
+
+
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+%%% Functions %%%
+\graphicspath{ {images/} }
+\newcommand{\sysname}{ModiPick\xspace}
+\newcommand{\Brittany}[1]{{\color{red}\textbf{Brittany: \textit{#1}}}}
+\newcommand{\sam}[1]{{\color{blue}\textbf{Sam: \textit{#1}}}}
+\newcommand{\eat}[1]{}
+%%%%%%%%%%%%
+
+
+
+\title{Access\_to\_the\_peanutcave\_reboot: CS557 Project 3
+}
+
+\author{\IEEEauthorblockN{Thomas Le Baron}
+\IEEEauthorblockA{Team 1008 \\ \textit{Computer Science} \\
+\textit{Worcester Polytechnic Institute}\\
+Worcester MA, USA \\
+tlebaron@wpi.edu}
+\and
+\IEEEauthorblockN{Brittany Lewis}
+\IEEEauthorblockA{Team 1008 \\ \textit{Computer Science} \\
+\textit{Worcester Polytechnic Institute}\\
+Worcester MA, USA \\
+bfgradel@wpi.edu}
+}
+
+
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\section{Finding access\_to\_the\_peanutcave\_reboot}
+Our docker image for access\_to\_the\_peanutcave\_reboot is located at:
+
+\begin{itemize}
+  \item \textbf{Challenge binary:}
+
+{\tt access\_to\_the\_peanutcave\_reboot}
+  \item \textbf{Solution:} described in detail in section IV
+  \item \textbf{md5sum hash of the binary file:} dfe9ba8583638b2b3b57859dcd87ad3a
+  \item \textbf{md5sum hash of the source file:} b0222244184a0dc658f94809925d6923
+\end{itemize}
+
+
+
+\input{introduction}
+\input{design}
+\input{implementation}
+\input{exploitation}
+\input{conclusion}
+
+
+
+%\bibliographystyle{ieeetran}
+%\bibliography{bib}
+
+
+\end{document}
