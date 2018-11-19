@@ -1,1 +1,6 @@
 \section{Conclusion}
+\subsection{Comments on the vulnerability}
+It seems that the issue with GNU Screen 4.5 is not a code bug. We did not use code vulnerabilities and techniques we learnt in the CS557 classe to get privilege escalation. The main issue with Screen is a design mistake. The devlopers of the softwares did not conceive that opening the logfiles in root privileges could be used to create root-owned files.
+
+\subsection{Reference}
+The proof of concept used in this project is published at {\tt https://www.exploit-db.com/exploits/41154/}.

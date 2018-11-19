@@ -1,1 +1,13 @@
 \section{Implementation}
+\subsection{Environment Creation}
+The Docker image does not need any configuration. For isntance, ASLR is kept enabled.
+
+The program exploited is GNU Screen 4.5. The program is not modified, but we added manualy the reference of the program to the {\tt usr/bin/} folder. Doing so allows the exploit file to run the Screen program without having to give its address.
+
+\subsection{Exploit Construction}
+The exploit has two parts.
+
+\begin{itemize}
+\item First we need to create the logfile. Opened with root privileges, the content of it is not checked but can be entirely written by the user. In the proof of concept, it concerns the lines 11-20. It simply gives a second file the permissions needed to be executed as root.
+\item The second file get the root permission from the first one. Its content suits the need of the attacker. In our case, we simply set the current user permissions to root and execute the {\tt execvp("/bin/shh")} instruction, which gives a shell with root privileges. This second file is described lines 25-32.
+\end{itemize}
