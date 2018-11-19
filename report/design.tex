@@ -1,5 +1,5 @@
 \section{Design}
-{\tt /ect/} is a root-owned folder. Therefore, all its content is supposed to be owned by root and therefore is considered safe. {\tt /etc/ld.so.preload} is a list of additional, user-specified, EFL shared libraries to be loaded before any others. Nevertheless, it is possible to create such a file if it doesn't already exist, and write in arbitrary libraries.
+{\tt /ect/} is a root-owned folder. Therefore, all its content is supposed to be owned by root and therefore is considered safe. {\tt /etc/ld.so.preload} is a list of additional, user-specified, EFL shared libraries to be loaded before any others, and it exists in etc so is owned by root. Nevertheless, it is possible to create a preload file if it doesn't already exist, and write in arbitrary libraries.
 
 
-The vulnerability of GNU Screen 4.5 comes from the fact it opens the {\tt ld.so.preload} file with root privileges without any verifications. With this, the library written in the file can be used to create a root-owned file, with arbitrary content and location. This second file can be a simple program with an {\tt exec} instruction, sufficient to get a shell with root privileges.
+The vulnerability of GNU Screen 4.5 comes from the fact it opens the {\tt ld.so.preload} file with root privileges and without any verification. With this, the library written in the file can be used to create a root-owned file, with arbitrary content. This second file can be a simple program with an {\tt exec} instruction, sufficient to get a shell with root privileges.
