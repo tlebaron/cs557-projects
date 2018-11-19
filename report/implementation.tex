@@ -2,12 +2,14 @@
 \subsection{Environment Creation}
 The Docker image does not need any configuration. For isntance, ASLR is kept enabled.
 
-The program exploited is GNU Screen 4.5. The program is not modified, but we added manualy the reference of the program to the {\tt usr/bin/} folder. Doing so allows the exploit file to run the Screen program without having to give its address.
+The program exploited is GNU Screen 4.5. We followed the usual step to install a software on a linux system from a compressed file. After uncompressing the software folder, we run {\tt ./configure}, {\tt make} and {\tt make install}.
 
 \subsection{Exploit Construction}
-The exploit has two parts.
+The exploit has three parts.
 
 \begin{itemize}
-\item First we need to create the logfile. Opened with root privileges, the content of it is not checked but can be entirely written by the user. In the proof of concept, it concerns the lines 11-20. It simply gives a second file the permissions needed to be executed as root.
-\item The second file get the root permission from the first one. Its content suits the need of the attacker. In our case, we simply set the current user permissions to root and execute the {\tt execvp("/bin/shh")} instruction, which gives a shell with root privileges. This second file is described lines 25-32.
+\item First we create the library and the exploit file. The library corresponds to the lines 11-20 of the exploit. Its job is to give the exploit file the root privileges needed. It also unlink the {\tt /etc/ld.so.preload} file so that the library is not called more than once. The exploit file simply get root privileges and execute {\tt execvp("bin/shh")}. It corresponds to the lines 25-32.
+\item Then we add the library to the {\tt /etc/ld.so.preload} file. Done line 39, it can be only done if this file doesn't exist in the first place.
+\item Second we run Screen again. Before running, all the libraries in the {\tt ld.so.preload} will do so. Since Screen has root privileges, then the library added will execute, giving the exploit file all the privileges needed. Once done, we simply run the exploit file with {\tt /tmp/rootshell}.
 \end{itemize}
+
